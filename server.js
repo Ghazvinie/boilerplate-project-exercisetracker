@@ -5,7 +5,6 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/usersRoutes');
 
-
 // Connect to DB and server listen
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => {
@@ -15,6 +14,9 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology
     });
   })
   .catch(error => console.log(error));
+
+// Body parsing
+app.use(express.urlencoded({ extended: true }));
 
 // Use cors
 app.use(cors());
