@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const { postNewUser, getUser, postNewExercise, getUserLogs } = require('../controllers/userController');
+const { postNewUser, getUsers, postNewExercise, getUserLogs } = require('../controllers/userController');
 
 // POST new user
 router.post('/users', postNewUser);
 
 // GET users array
-router.get('/users', getUser);
+router.get('/users', getUsers);
 
 // POST new exercise
 router.post('/users/:_id/exercises', postNewExercise);
