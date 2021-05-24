@@ -5,6 +5,8 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/usersRoutes');
 
+
+// Connect to DB and server listen
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => {
     console.log('Connected to DB...')
@@ -14,20 +16,11 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology
   })
   .catch(error => console.log(error));
 
-
-
 // Use cors
 app.use(cors());
 
 // Static files
 app.use(express.static('public'));
-
-
-
-
-
-
-
 
 // Root route
 app.get('/', (req, res) => {
@@ -36,6 +29,3 @@ app.get('/', (req, res) => {
 
 // User routes
 app.use('/api', userRoutes);
-
-
-
