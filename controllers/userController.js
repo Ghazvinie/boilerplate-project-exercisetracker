@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const UserModel = require('../models/userModel');
+
 function postNewUser(req, res) {
     res.send('postNewUser');
 }
