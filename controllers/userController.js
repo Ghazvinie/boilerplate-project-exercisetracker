@@ -1,5 +1,6 @@
 const UserModel = require('../models/userModel');
 const handleErrors = require('../utils/handleErrors');
+const queryParser = require('../utils/queryParser');
 
 async function postNewUser(req, res) {
     const username = req.body.username.trim();
@@ -58,10 +59,7 @@ async function postNewExercise(req, res) {
 }
 
 async function getUserLogs(req, res) {
-    const _id = req.params._id.trim();
-    const from = req.query.from === undefined ? new Date(0) : new Date(req.query.from).getTime();
-    const to = req.query.to === undefined ? new Date() : new Date(req.query.to).getTime();
-    const limit = req.query.limit === undefined ? 0 : parseInt(req.query.limit);
+    const {_id, from, to, limit } = queryParser(req.params._id, req.query.from, req.query.to, req.query.limit);
 
     if (Object.keys(req.query).length === 0) {
         await UserModel.findById(_id)
@@ -99,4 +97,3 @@ async function getUserLogs(req, res) {
 }
 
 module.exports = { postNewUser, getUsers, postNewExercise, getUserLogs };
-
