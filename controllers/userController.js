@@ -35,7 +35,7 @@ async function postNewExercise(req, res) {
     const exercise = {
         description,
         duration: parseInt(duration),
-        date: date == undefined ? new Date().toDateString() : new Date(date).toDateString()
+        date: date === undefined ? new Date().toDateString() : new Date(date).toDateString()
     };
 
     await UserModel.findOneAndUpdate({ _id }, { $push: { log: exercise } }, { new: true, useFindAndModify: false })
@@ -80,7 +80,7 @@ async function getUserLogs(req, res) {
                     username: document.userName,
                     log: filtered.slice(0, limit === 0 ? filtered.length : limit),
                     count: document.log.length || 0
-                })
+                });
             })
             .catch(error => console.log(error));
     }
