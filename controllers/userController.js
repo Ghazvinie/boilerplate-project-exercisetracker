@@ -1,6 +1,5 @@
 const UserModel = require('../models/userModel');
 const handleErrors = require('../utils/handleErrors');
-const mongoose = require('mongoose');
 
 async function postNewUser(req, res) {
     const username = req.body.username.trim();
@@ -30,30 +29,40 @@ async function getUsers(req, res) {
 }
 
 async function postNewExercise(req, res) {
-
+    const { description, duration, date } = req.body;
     const _id = req.params._id.trim();
     const exercise = {
-        description: req.body.description,
-        duration: req.body.duration,
-        date: req.body.date || new Date().toDateString()
+        description,
+        duration: parseInt(duration),
+        date: new Date(date).toDateString() || new Date().toDateString()
     };
 
-    await UserModel.findOneAndUpdate({ _id }, { $push: { exercises: exercise } }, { new: true, useFindAndModify: false })
+    await UserModel.findOneAndUpdate({ _id }, { $push: { log: exercise } }, { new: true, useFindAndModify: false })
         .then(document => {
-            res.json({
+            return res.json({
+                username: document.userName,
+                description: exercise.description,
+                duration: exercise.duration,
                 _id: document._id,
                 date: exercise.date,
-                duration: exercise.duration,
-                description: exercise.description,
-                username: document.userName
             });
         })
-        .catch(error => console.log(error));
-
+        .catch(error => console.log(error.message));
 }
 
-function getUserLogs(req, res) {
-    res.send('getUserLogs');
+async function getUserLogs(req, res) {
+    const _id = req.params._id.trim();
+
+    await UserModel.findById(_id)
+        .then(document => {
+            return res.json({
+                _id: document._id,
+                username: document.userName,
+                log: document.log,
+                count: document.log.length
+            });
+        });
+
 
 }
 

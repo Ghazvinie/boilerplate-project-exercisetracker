@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
         unique: [true, 'User already exists']
     },
 
-    exercises: [new mongoose.Schema({
+    log: [new mongoose.Schema({
         description: {
             type: String,
             required: true

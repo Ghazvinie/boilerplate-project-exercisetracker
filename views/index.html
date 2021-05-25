@@ -19,10 +19,10 @@
       <form id="exercise-form" method="post">
         <h3>Add exercises</h3>
         <p><code>POST /api/users/:_id/exercises</code></p>
-        <input id="uid" type="text" name=":_id" placeholder=":_id">
-        <input id="desc" type="text" name="description" placeholder="description*">
-        <input id="dur" type="text" name="duration" placeholder="duration* (mins.)">
-        <input id="dat" type="text" name="date" placeholder="date (yyyy-mm-dd)">
+        <input id="uid" type="text" name=":_id" placeholder=":_id" required>
+        <input id="desc" type="text" name="description" placeholder="description*" required>
+        <input id="dur" type="text" name="duration" placeholder="duration* (mins.)" pattern="\d+" required>
+        <input id="dat" type="text" name="date" placeholder="date (yyyy-mm-dd)" pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
         <input type="submit" value="Submit">
       </form>
       <p>

@@ -11,6 +11,8 @@ function handleErrors(error) {
         errorObject.message = 'Username field is empty, please enter a username';
         return errorObject;
     }
+
+    
 }
 
 module.exports = handleErrors;
