@@ -7,12 +7,21 @@ function handleErrors(error) {
         return errorObject;
     }
 
-    if (error.message.includes('`userName` is required')){
+    if (error.message.includes('`userName` is required')) {
         errorObject.message = 'Username field is empty, please enter a username';
         return errorObject;
     }
 
-    
+    if (error.message === 'GET user error') {
+        errorObject.message = 'There was an error finding the user, please try again';
+        return errorObject;
+    }
+
+    if (error.message === 'update user error') {
+        errorObject.message = 'There was an error updating the user, please try again';
+        return errorObject;
+    }
+
 }
 
 module.exports = handleErrors;

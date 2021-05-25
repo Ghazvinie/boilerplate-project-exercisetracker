@@ -11,7 +11,7 @@ async function postNewUser(req, res) {
         })
         .catch(error => {
             const errorObject = handleErrors(error);
-            return res.json(errorObject);
+            return res.json({ errorObject, error });
         });
 }
 
@@ -25,7 +25,10 @@ async function getUsers(req, res) {
             }, []);
             return res.json(userArray);
         })
-        .catch(error => console.log(error));
+        .catch(error => {
+            const errorObject = handleErrors(new Error('GET user error'));
+            return res.json({ errorObject, error });
+        });
 }
 
 async function postNewExercise(req, res) {
@@ -48,7 +51,10 @@ async function postNewExercise(req, res) {
                 date: exercise.date,
             });
         })
-        .catch(error => console.log(error.message));
+        .catch(error => {
+            const errorObject = handleErrors(new Error('update user error'));
+            return res.json({ errorObject, error });
+        });
 }
 
 async function getUserLogs(req, res) {
@@ -67,7 +73,10 @@ async function getUserLogs(req, res) {
                     count: document.log.length || 0
                 });
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                const errorObject = handleErrors(new Error('GET user error'));
+                return res.json({ errorObject, error });
+            });
     } else {
         await UserModel.findById(_id)
             .then(document => {
@@ -82,7 +91,10 @@ async function getUserLogs(req, res) {
                     count: document.log.length || 0
                 });
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                const errorObject = handleErrors(new Error('GET user error'));
+                return res.json({ errorObject, error });
+            });
     }
 }
 
