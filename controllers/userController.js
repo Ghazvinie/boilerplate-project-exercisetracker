@@ -31,10 +31,11 @@ async function getUsers(req, res) {
 async function postNewExercise(req, res) {
     const { description, duration, date } = req.body;
     const _id = req.params._id.trim();
+
     const exercise = {
         description,
         duration: parseInt(duration),
-        date: new Date(date).toDateString() || new Date().toDateString()
+        date: date == undefined ? new Date().toDateString() : new Date(date).toDateString()
     };
 
     await UserModel.findOneAndUpdate({ _id }, { $push: { log: exercise } }, { new: true, useFindAndModify: false })
@@ -52,18 +53,37 @@ async function postNewExercise(req, res) {
 
 async function getUserLogs(req, res) {
     const _id = req.params._id.trim();
+    const from = req.query.from === undefined ? new Date(0) : new Date(req.query.from).getTime();
+    const to = req.query.to === undefined ? new Date() : new Date(req.query.to).getTime();
+    const limit = req.query.limit === undefined ? 0 : parseInt(req.query.limit);
 
-    await UserModel.findById(_id)
-        .then(document => {
-            return res.json({
-                _id: document._id,
-                username: document.userName,
-                log: document.log,
-                count: document.log.length
-            });
-        });
-
-
+    if (Object.keys(req.query).length === 0) {
+        await UserModel.findById(_id)
+            .then(document => {
+                return res.json({
+                    _id: document._id,
+                    username: document.userName,
+                    log: document.log,
+                    count: document.log.length || 0
+                });
+            })
+            .catch(error => console.log(error));
+    } else {
+        await UserModel.findById(_id)
+            .then(document => {
+                const filtered = document.log.filter(exercise => {
+                    const exerciseDate = new Date(exercise.date).getTime();
+                    return exerciseDate >= from && exerciseDate <= to;
+                });
+                return res.json({
+                    _id: document._id,
+                    username: document.userName,
+                    log: filtered.slice(0, limit === 0 ? filtered.length : limit),
+                    count: document.log.length || 0
+                })
+            })
+            .catch(error => console.log(error));
+    }
 }
 
 module.exports = { postNewUser, getUsers, postNewExercise, getUserLogs };
