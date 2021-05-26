@@ -43,6 +43,7 @@
       <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
     </div>
     <script>
+
       const exerciseForm = document.getElementById("exercise-form");
       const getExercises = document.getElementById("exercise-get");
 
@@ -62,8 +63,7 @@
         getExercises.action = `/api/users/${userId}/logs?from=${from}&to=${to}&limit=${limit}`;
 
         getExercises.submit();
-      })
-
+      });
 
     </script>
   </body>
