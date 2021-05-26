@@ -7,7 +7,6 @@ async function postNewUser(req, res) {
 
     await UserModel.create({ userName: username })
         .then((user) => {
-            console.log('New user created');
             return res.json({ username: user.userName, _id: user._id });
         })
         .catch(error => {
@@ -60,7 +59,7 @@ async function postNewExercise(req, res) {
 
 async function getUserLogs(req, res) {
     const {_id, from, to, limit } = queryParser(req.params._id, req.query.from, req.query.to, req.query.limit);
-
+    
     if (Object.keys(req.query).length === 0) {
         await UserModel.findById(_id)
             .then(document => {
