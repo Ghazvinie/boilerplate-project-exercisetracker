@@ -25,6 +25,16 @@
         <input id="dat" type="text" name="date" placeholder="date (yyyy-mm-dd)" pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
         <input type="submit" value="Submit">
       </form>
+      <form id="exercise-get" method="get">
+      <h3>Get exercises</h3>
+      <code>GET /api/users/:_id/logs?[&amp;from][&amp;to][&amp;limit]</code>
+      <input id="uid" type="text" name=":_id" placeholder=":_id or username" required>
+      <input id="limit" type="text" name="limit" placeholder="limit" pattern="\d+"> 
+      <input id="from" type="text" name="from" placeholder="from date (yyyy-mm-dd)" pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
+      <input id="to" type="text" name="to" placeholder="to date (yyyy-mm-dd)" pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">    
+      <input type="submit" value="Submit">
+    </form>
+
       <p>
         <strong>GET user's exercise log: </strong>
         <code>GET /api/users/:_id/logs?[&amp;from][&amp;to][&amp;limit]</code>

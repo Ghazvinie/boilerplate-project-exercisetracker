@@ -1,6 +1,7 @@
+const mongoose = require('mongoose');
 const UserModel = require('../models/userModel');
 const handleErrors = require('../utils/handleErrors');
-const queryParser = require('../utils/queryParser');
+const { queryParser, idOrUser } = require('../utils/parserUtility');
 
 async function postNewUser(req, res) {
     const username = req.body.username.trim();
@@ -33,7 +34,7 @@ async function getUsers(req, res) {
 
 async function postNewExercise(req, res) {
     const { description, duration, date } = req.body;
-    const _id = req.params._id.trim();
+    const user = idOrUser(req.params._id);
 
     const exercise = {
         description,
@@ -41,7 +42,7 @@ async function postNewExercise(req, res) {
         date: date === undefined ? new Date().toDateString() : new Date(date).toDateString()
     };
 
-    await UserModel.findOneAndUpdate({ _id }, { $push: { log: exercise } }, { new: true, useFindAndModify: false })
+    await UserModel.findOneAndUpdate( user , { $push: { log: exercise } }, { new: true, useFindAndModify: false })
         .then(document => {
             return res.json({
                 username: document.userName,
@@ -52,16 +53,18 @@ async function postNewExercise(req, res) {
             });
         })
         .catch(error => {
+            console.log(error);
             const errorObject = handleErrors(new Error('update user error'));
             return res.json({ errorObject, error });
         });
 }
 
 async function getUserLogs(req, res) {
-    const {_id, from, to, limit } = queryParser(req.params._id, req.query.from, req.query.to, req.query.limit);
-    
+    const { from, to, limit } = queryParser(req.query.from, req.query.to, req.query.limit);
+    const user = idOrUser(req.params._id);
+
     if (Object.keys(req.query).length === 0) {
-        await UserModel.findById(_id)
+        await UserModel.findOne(user)
             .then(document => {
                 return res.json({
                     _id: document._id,
@@ -75,7 +78,7 @@ async function getUserLogs(req, res) {
                 return res.json({ errorObject, error });
             });
     } else {
-        await UserModel.findById(_id)
+        await UserModel.findOne(user)
             .then(document => {
                 const filtered = document.log.filter(exercise => {
                     const exerciseDate = new Date(exercise.date).getTime();
