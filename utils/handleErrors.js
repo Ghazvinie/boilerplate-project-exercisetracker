@@ -1,6 +1,5 @@
 function handleErrors(error) {
     const errorObject = { message: '' };
-    console.log(error.name);
 
     if (error.code === 11000) {
         errorObject.message = 'Username is already taken';
