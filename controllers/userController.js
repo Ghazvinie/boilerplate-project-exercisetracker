@@ -20,9 +20,9 @@ async function postNewUser(req, res) {
 }
 
 // Get all users
-async function getUsers(req, res) {
+function getUsers(req, res) {
 
-    await UserModel.find()
+    UserModel.find()
         .then(collection => {
             // Create array of all user objects
             const userArray = collection.reduce((acc, curr) => {
@@ -38,7 +38,7 @@ async function getUsers(req, res) {
 }
 
 // Add a new exercise
-async function postNewExercise(req, res) {
+function postNewExercise(req, res) {
     const { description, duration, date } = req.body;
     const user = idOrUser(req.params._id);
 
@@ -49,7 +49,7 @@ async function postNewExercise(req, res) {
         date: date === undefined ? new Date().toDateString() : new Date(date).toDateString()
     };
 
-    await UserModel.findOneAndUpdate(user, { $push: { log: exercise } }, { new: true, useFindAndModify: false })
+    UserModel.findOneAndUpdate(user, { $push: { log: exercise } }, { new: true, useFindAndModify: false })
         .then(document => {
             const userObject = {
                 username: document.userName,
@@ -67,13 +67,13 @@ async function postNewExercise(req, res) {
 }
 
 // Get specific user's logs
-async function getUserLogs(req, res) {
+function getUserLogs(req, res) {
     const { from, to, limit } = queryParser(req.query.from, req.query.to, req.query.limit);
     const user = idOrUser(req.params._id);
 
     // If no query parameters provided
     if (Object.keys(req.query).length === 0) {
-        await UserModel.findOne(user)
+        UserModel.findOne(user)
             .then(document => {
                 const userObject = {
                     _id: document._id,
@@ -88,7 +88,7 @@ async function getUserLogs(req, res) {
                 return res.status(400).json({ errorObject, error });
             });
     } else {
-        await UserModel.findOne(user)
+        UserModel.findOne(user)
             .then(document => {
                 // Filter logs between dates
                 const filtered = document.log.filter(exercise => {
