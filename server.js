@@ -26,7 +26,7 @@ app.use(express.static('public'));
 
 // Root route
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/views/index.html');
+  res.status(200).sendFile(__dirname + '/views/index.html');
 });
 
 // User routes
