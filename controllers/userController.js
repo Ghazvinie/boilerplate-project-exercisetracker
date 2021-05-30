@@ -29,11 +29,11 @@ async function getUsers(req, res) {
                 acc.push({ username: curr.userName, _id: curr._id });
                 return acc;
             }, []);
-            return res.json(userArray);
+            return res.status(200).json(userArray);
         })
         .catch(error => {
             const errorObject = handleErrors(new Error('GET user error'));
-            return res.json({ errorObject, error });
+            return res.status(400).json({ errorObject, error });
         });
 }
 
@@ -58,11 +58,11 @@ async function postNewExercise(req, res) {
                 _id: document._id,
                 date: exercise.date,
             };
-            return res.json(userObject);
+            return res.status(201).json(userObject);
         })
         .catch(error => {
             const errorObject = handleErrors(new Error('update user error'));
-            return res.json({ errorObject, error });
+            return res.status(404).json({ errorObject, error });
         });
 }
 
@@ -81,11 +81,11 @@ async function getUserLogs(req, res) {
                     log: document.log,
                     count: document.log.length || 0
                 };
-                return res.json(userObject);
+                return res.status(200).json(userObject);
             })
             .catch(error => {
                 const errorObject = handleErrors(new Error('GET user error'));
-                return res.json({ errorObject, error });
+                return res.status(400).json({ errorObject, error });
             });
     } else {
         await UserModel.findOne(user)
@@ -101,11 +101,11 @@ async function getUserLogs(req, res) {
                     log: filtered.slice(0, limit === 0 ? filtered.length : limit),
                     count: document.log.length || 0
                 };
-                return res.json(userObject);
+                return res.status(200).json(userObject);
             })
             .catch(error => {
                 const errorObject = handleErrors(new Error('GET user error'));
-                return res.json({ errorObject, error });
+                return res.status(400).json({ errorObject, error });
             });
     }
 }
