@@ -1,70 +1,84 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Exercise Tracker | freeCodeCamp</title>
-    <link rel="shortcut icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png" type="image/x-icon"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
-    <link href="style.css" rel="stylesheet" type="text/css">
-  </head>
 
-  <body>
-    <div class="container">
-      <h1>Exercise tracker</h1>
-      <form action="/api/users" method="post">
-        <h3>Create a New User</h3>
-        <p><code>POST /api/users</code></p>
-        <input id="uname" type="text" name="username" placeholder="username">
-        <input type="submit" value="Submit">
-      </form>
-      <form id="exercise-form" method="post">
-        <h3>Add exercises</h3>
-        <p><code>POST /api/users/:_id/exercises</code></p>
-        <input id="uidPost" type="text" name=":_id" placeholder=":id or username" required>
-        <input id="desc" type="text" name="description" placeholder="description*" required>
-        <input id="dur" type="text" name="duration" placeholder="duration* (mins.)" pattern="\d+" required>
-        <input id="dat" type="text" name="date" placeholder="date (yyyy-mm-dd)" pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
-        <input type="submit" value="Submit">
-      </form>
-      <form id="exercise-get" method="get">
+<head>
+  <title>Exercise Tracker | freeCodeCamp</title>
+  <link rel="shortcut icon" href="https://cdn.freecodecamp.org/universal/favicons/favicon-32x32.png"
+    type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>Exercise tracker</h1>
+    <form action="/api/users" method="post">
+      <h3>Create a New User</h3>
+      <p><code>POST /api/users</code></p>
+      <input id="uname" type="text" name="username" placeholder="username">
+      <input type="submit" value="Submit">
+    </form>
+    <form id="exercise-form" method="post">
+      <h3>Add exercises</h3>
+      <p><code>POST /api/users/:_id/exercises</code></p>
+      <input id="uidPost" type="text" name=":_id" placeholder=":id or username" required>
+      <input id="desc" type="text" name="description" placeholder="description*" required>
+      <input id="dur" type="text" name="duration" placeholder="duration* (mins.)" pattern="\d+" required>
+      <input id="dat" type="text" name="date" placeholder="date (yyyy-mm-dd)"
+        pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
+      <input type="submit" value="Submit">
+    </form>
+    <form id="exercise-get" method="get">
       <h3>Get exercises</h3>
       <code>GET /api/users/:_id/logs?[&amp;from][&amp;to][&amp;limit]</code>
       <input id="uidGet" type="text" name=":_id" placeholder=":_id or username" required>
-      <input id="limit" type="text" name="limit" placeholder="limit" pattern="\d+"> 
-      <input id="from" type="text" name="from" placeholder="from date (yyyy-mm-dd)" pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
-      <input id="to" type="text" name="to" placeholder="to date (yyyy-mm-dd)" pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">    
+      <input id="limit" type="text" name="limit" placeholder="limit" pattern="\d+">
+      <input id="from" type="text" name="from" placeholder="from date (yyyy-mm-dd)"
+        pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
+      <input id="to" type="text" name="to" placeholder="to date (yyyy-mm-dd)"
+        pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
       <input type="submit" value="Submit">
     </form>
 
-      <p>
-        <strong>GET user's exercise log: </strong>
-        <code>GET /api/users/:_id/logs?[&amp;from][&amp;to][&amp;limit]</code>
-      </p>
-      <p><strong>[ ]</strong> = optional</p>
-      <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
-    </div>
-    <script>
+    <p>
+      <strong>GET user's exercise log: </strong>
+      <code>GET /api/users/:_id/logs?[&amp;from][&amp;to][&amp;limit]</code>
+    </p>
+    <p><strong>[ ]</strong> = optional</p>
+    <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
+  </div>
+  <script>
 
-      const exerciseForm = document.getElementById("exercise-form");
-      const getExercises = document.getElementById("exercise-get");
+    const exerciseForm = document.getElementById("exercise-form");
+    const getExercises = document.getElementById("exercise-get");
 
-      exerciseForm.addEventListener("submit", () => {
-        const userId = document.getElementById("uidPost").value;
-        exerciseForm.action = `/api/users/${userId}/exercises`;
+    exerciseForm.addEventListener("submit", () => {
+      const userId = document.getElementById("uidPost").value;
+      exerciseForm.action = `/api/users/${userId}/exercises`;
 
-        exerciseForm.submit();
-      });
+      exerciseForm.submit();
+    });
 
-      getExercises.addEventListener('submit', () => {
-        const userId = document.getElementById("uidGet").value;
-        const from = document.getElementById("from").value;
-        const to = document.getElementById("to").value;
-        const limit = document.getElementById("limit").value;
 
-        getExercises.action = `/api/users/${userId}/logs?from=${from}&to=${to}&limit=${limit}`;
 
-        getExercises.submit();
-      });
+    getExercises.onsubmit = async function (e) {
+      e.preventDefault();
+      const getForm = new FormData(getExercises);
+      
+      let formData = {}
+      for (let key of getForm.keys()) {
+        formData[key] = getForm.get(key)
+      }
 
-    </script>
-  </body>
+      const response = await fetch(`/api/users/${formData[':_id']}/logs?from=${formData.from}&to=${formData.to}&limit=${formData.limit}`)
+      const data = await response.json();
+      document.body.innerHTML = JSON.stringify(data)
+
+
+
+
+    }
+  </script>
+</body>
+
 </html>

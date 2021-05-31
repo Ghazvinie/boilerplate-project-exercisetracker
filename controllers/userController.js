@@ -5,10 +5,10 @@ const { queryParser, idOrUser } = require('../utils/parserUtility');
 
 
 // Create new user
-async function postNewUser(req, res) {
+function postNewUser(req, res) {
     const username = req.body.username.trim();
 
-    await UserModel.create({ userName: username })
+    UserModel.create({ userName: username })
         .then((user) => {
             const userObject = { username: user.userName, _id: user._id };
             return res.json(userObject);
