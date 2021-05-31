@@ -39,7 +39,7 @@
         pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
       <input type="submit" value="Submit">
     </form>
-
+    <div class="error"></div>
     <p>
       <strong>GET user's exercise log: </strong>
       <code>GET /api/users/:_id/logs?[&amp;from][&amp;to][&amp;limit]</code>
@@ -48,6 +48,8 @@
     <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
   </div>
   <script>
+    const errorDiv = document.querySelector('.error');
+
 
     const exerciseForm = document.getElementById("exercise-form");
     const getExercises = document.getElementById("exercise-get");
@@ -64,7 +66,7 @@
     getExercises.onsubmit = async function (e) {
       e.preventDefault();
       const getForm = new FormData(getExercises);
-      
+
       let formData = {}
       for (let key of getForm.keys()) {
         formData[key] = getForm.get(key)
@@ -72,11 +74,13 @@
 
       const response = await fetch(`/api/users/${formData[':_id']}/logs?from=${formData.from}&to=${formData.to}&limit=${formData.limit}`)
       const data = await response.json();
-      document.body.innerHTML = JSON.stringify(data)
 
-
-
-
+      if (data.errorObject) {
+        errorDiv.innerHTML = `<h3 style="color:red">${data.errorObject.message}</h3>`;
+        return;
+      }
+      
+      document.body.innerHTML = JSON.stringify(data);
     }
   </script>
 </body>
