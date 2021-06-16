@@ -4,7 +4,7 @@
 - Save a user to the database (Create)
 - Add exercises to the user (Update)
 - Get list of exercise logs between specfic dates (Read)
-- Delete a user from the database (Delete) --- Not yet implemented ---
+- Delete a user from the database (Delete)
 
 On each method a JSON object is returned with the information to the method just performed.
 
