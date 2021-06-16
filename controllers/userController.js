@@ -110,4 +110,21 @@ function getUserLogs(req, res) {
     }
 }
 
-module.exports = { postNewUser, getUsers, postNewExercise, getUserLogs };
+
+// Delete user from database
+async function deleteUser(req, res) {
+    const user = idOrUser(req.body.username);
+    try {
+        // Delete user and return deleted user
+        const deleted = await UserModel.deleteOne(user);
+        if (deleted.deletedCount > 0) {
+            res.status(200).json({ deleted: user });
+        } else {
+            res.status(400).json({ user: 'Invalid user' });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+module.exports = { postNewUser, getUsers, postNewExercise, getUserLogs, deleteUser };
