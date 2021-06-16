@@ -9,7 +9,7 @@ App functionality:
 On each method a JSON object is returned with the information to the method just performed.
 
 Although based on a FCC project, the app has been extended:
-- Can add exercises with a username or databse _id 
+- Can add exercises with a username or databse _id (was previously by _id only)
 - Can read from the database using an HTML form 
 - Can delete a user
 
