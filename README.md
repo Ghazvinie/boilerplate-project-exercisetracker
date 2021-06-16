@@ -1,6 +1,6 @@
 # MongoDB CRUD app based upon the FCC [Exercise Tracker](https://www.freecodecamp.org/learn/apis-and-microservices/apis-and-microservices-projects/exercise-tracker)
 
-App functionality: 
+### App functionality: 
 - Save a user to the database (Create)
 - Add exercises to the user (Update)
 - Get list of exercise logs between specfic dates (Read)
@@ -8,7 +8,7 @@ App functionality:
 
 On each method a JSON object is returned with the information to the method just performed.
 
-Although based on a FCC project, the app has been extended:
+### Although based on a FCC project, the app has been extended:
 - Can add exercises with a username or databse _id (was previously by _id only)
 - Can read from the database using an HTML form 
 - Can delete a user
