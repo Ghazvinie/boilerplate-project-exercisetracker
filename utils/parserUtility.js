@@ -12,11 +12,11 @@ function queryParser(queryFrom, queryTo, queryLimit) {
 
 // Returns the correct value for searching the database for the username or user _id
 function idOrUser(idOrUsername) {
-    let user = idOrUsername.trim();
-    user = { userName: idOrUsername };
+    let user;
+    user = { userName: idOrUsername.trim() };
     // Check if is valid _id (else is userName)
     if (mongoose.Types.ObjectId.isValid(idOrUsername)) {
-        user = { _id: idOrUsername };
+        user = { _id: idOrUsername.trim() };
     }
     return user;
 }

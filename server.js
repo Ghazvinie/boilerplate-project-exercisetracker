@@ -9,7 +9,7 @@ const userRoutes = require('./routes/usersRoutes');
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => {
     console.log('Connected to DB...')
-    const listener = app.listen(process.env.PORT || 3000, () => {
+    const listener = app.listen(process.env.PORT || 3001, () => {
       console.log('Your app is listening on port ' + listener.address().port);
     });
   })
@@ -31,3 +31,7 @@ app.get('/', (req, res) => {
 
 // User routes
 app.use('/api', userRoutes);
+
+app.get('*', (req, res) => {
+  res.redirect('/');
+});
