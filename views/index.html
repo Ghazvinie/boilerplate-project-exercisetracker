@@ -14,44 +14,46 @@
     <h1>Exercise tracker</h1>
     <form action="/api/users" method="post">
       <h3>Create a New User</h3>
-      <p><code>POST /api/users</code></p>
-      <input id="uname" type="text" name="username" placeholder="username">
+      <input id="uname" type="text" name="username" placeholder="username (required)">
       <input type="submit" value="Submit">
     </form>
     <form action="/api/delete" method="post">
       <h3>Delete a user</h3>
-      <p><code>POST /api/users</code></p>
-      <input id="uname" type="text" name="username" placeholder="username">
+      <input id="uname" type="text" name="username" placeholder="username (required)">
       <input type="submit" value="Submit">
     </form>
     <form id="exercise-form" method="post">
       <h3>Add exercises</h3>
-      <p><code>POST /api/users/:_id/exercises</code></p>
-      <input id="uidPost" type="text" name=":_id" placeholder=":id or username" required>
-      <input id="desc" type="text" name="description" placeholder="description*" required>
-      <input id="dur" type="text" name="duration" placeholder="duration* (mins.)" pattern="\d+" required>
-      <input id="dat" type="text" name="date" placeholder="date (yyyy-mm-dd)"
+      <input id="uidPost" type="text" name=":_id" placeholder="id or username (required)" required>
+      <input id="desc" type="text" name="description" placeholder="description (required)" required>
+      <input id="dur" type="text" name="duration" placeholder="duration (mins.) (required)" pattern="\d+" required>
+      <input id="dat" type="text" name="date" placeholder="date (yyyy-mm-dd) (optional)"
         pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
       <input type="submit" value="Submit">
     </form>
     <form id="exercise-get" method="get">
       <h3>Get exercises</h3>
-      <code>GET /api/users/:_id/logs?[&amp;from][&amp;to][&amp;limit]</code>
-      <input id="uidGet" type="text" name=":_id" placeholder=":_id or username" required>
-      <input id="limit" type="text" name="limit" placeholder="limit" pattern="\d+">
-      <input id="from" type="text" name="from" placeholder="from date (yyyy-mm-dd)"
+      <input id="uidGet" type="text" name=":_id" placeholder="id or username (required)" required>
+      <input id="limit" type="text" name="limit" placeholder="limit (optional)" pattern="\d+">
+      <input id="from" type="text" name="from" placeholder="from date (yyyy-mm-dd) (optional)"
         pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
-      <input id="to" type="text" name="to" placeholder="to date (yyyy-mm-dd)"
+      <input id="to" type="text" name="to" placeholder="to date (yyyy-mm-dd) (optional)"
         pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$">
       <input type="submit" value="Submit">
     </form>
     <div class="error"></div>
     <p>
-      <strong>GET user's exercise log: </strong>
-      <code>GET /api/users/:_id/logs?[&amp;from][&amp;to][&amp;limit]</code>
+      <strong>Use the various forms to :</strong>
+      <br /> <br />
+      - Create a user
+      <br /> <br />
+      - Delete a user
+      <br /> <br />
+      - Log an exercise for a user
+      <br /> <br />
+      - Get the exercise logs of a user
+
     </p>
-    <p><strong>[ ]</strong> = optional</p>
-    <p><strong>from, to</strong> = dates (yyyy-mm-dd); <strong>limit</strong> = number</p>
   </div>
   <script>
     const errorDiv = document.querySelector('.error');
@@ -85,7 +87,7 @@
         errorDiv.innerHTML = `<h3 style="color:red">${data.errorObject.message}</h3>`;
         return;
       }
-      
+
       document.body.innerHTML = JSON.stringify(data);
     }
   </script>

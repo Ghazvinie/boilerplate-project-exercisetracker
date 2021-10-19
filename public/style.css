@@ -42,7 +42,7 @@ input {
 input[type=submit] {
   font-size: 16px;
   border-radius: 3px;
-  background-color: #E4F1FE;
+  background-color: white;
   border: 1px solid grey;
   box-shadow: 2px 2px #999;
   cursor: pointer;
