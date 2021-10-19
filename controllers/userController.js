@@ -70,7 +70,6 @@ function postNewExercise(req, res) {
 function getUserLogs(req, res) {
     const { from, to, limit } = queryParser(req.query.from, req.query.to, req.query.limit);
     const user = idOrUser(req.params._id);
-    console.log(user)
 
     // If no query parameters provided
     if (Object.keys(req.query).length === 0) {
