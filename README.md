@@ -16,7 +16,7 @@ On each method a JSON object is returned with the information to the method just
 ### Built with:
 
 - JavaScript
-- NodeJs 16.1.0 / Express 4.17.1
+- Node.js 16.1.0 / Express 4.17.1
 - HTML / CSS
 - MongoDB / Mongoose 5.12.12
 
